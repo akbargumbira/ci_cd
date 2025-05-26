@@ -19,5 +19,5 @@ jobs:
 
       - name: Deploy services
         run: |
-          helm upgrade --install foo ./k8s/charts/echo-template -f deployment/foo/values.yaml
+          helm upgrade --install foo ./k8s/charts/echo-template -f ./k8s/deployment/foo/values.yaml
 
