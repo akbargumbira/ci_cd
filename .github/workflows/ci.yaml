@@ -5,6 +5,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -40,6 +42,24 @@ jobs:
           sleep 5
           curl -f -H "Host: foo.localhost" http://localhost:8080
           curl -f -H "Host: bar.localhost" http://localhost:8080
+
+      - name: Install Locust
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install locust
+
+      - name: Run Locust load test
+        run: |
+          locust -f ./load_test/locustfile.py --headless -u 100 -r 10 --host http://localhost:8080 --run-time 30s --csv=locust_report
+          python load_test/summarize_locust.py
+
+      - name: Post summary as PR comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-file: locust_summary.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
 
 
