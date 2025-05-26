@@ -1,0 +1,8 @@
+name: bar
+responseText: bar
+replicaCount: 1
+service:
+  port: 80
+  targetPort: 5678
+ingressRoute:
+  host: bar.localhost
