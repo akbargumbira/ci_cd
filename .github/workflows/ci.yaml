@@ -30,9 +30,12 @@ jobs:
             --selector=app.kubernetes.io/name=traefik \
             --timeout=120s
           kubectl get pods -l app.kubernetes.io/name=traefik
-        
 
       - name: Deploy services
         run: |
           helm upgrade --install foo ./k8s/charts/echo-template -f ./k8s/deployment/foo/values.yaml
+          helm upgrade --install bar ./k8s/charts/echo-template -f ./k8s/deployment/bar/values.yaml
+          kubectl wait --for=condition=ready pod -l 'app in (foo,bar)' --timeout=120s
+          kubectl get pods -l 'app in (foo,bar)'
+
 
