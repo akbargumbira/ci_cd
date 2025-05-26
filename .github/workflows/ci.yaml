@@ -16,3 +16,8 @@ jobs:
           kind create cluster --config kind/cluster-config.yaml
           kubectl config current-context
           kubectl get nodes -o wide
+
+      - name: Deploy services
+        run: |
+          helm upgrade --install foo ./k8s/charts/echo-template -f deployment/foo/values.yaml
+
