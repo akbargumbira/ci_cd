@@ -1,0 +1,4 @@
+apiVersion: v2
+name: echo
+description: A simple echo service
+version: 1.0.0

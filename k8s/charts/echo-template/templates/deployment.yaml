@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo
+          args:
+            - "-text={{ .Values.responseText }}"
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}

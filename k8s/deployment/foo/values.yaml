@@ -1,0 +1,8 @@
+name: foo
+responseText: foo
+replicaCount: 1
+service:
+  port: 80
+  targetPort: 5678
+ingressRoute:
+  host: foo.localhost
