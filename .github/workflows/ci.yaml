@@ -25,8 +25,7 @@ jobs:
             --set ports.web.hostPort=80 \
             --set ports.websecure.hostPort=443 \
             --set service.type=NodePort
-          kubectl wait --namespace default \
-            --for=condition=ready pod \
+          kubectl wait --for=condition=ready pod \
             --selector=app.kubernetes.io/name=traefik \
             --timeout=120s
           kubectl get pods -l app.kubernetes.io/name=traefik
@@ -37,6 +36,10 @@ jobs:
           helm upgrade --install bar ./k8s/charts/echo-template -f ./k8s/deployment/bar/values.yaml
           kubectl wait --for=condition=ready pod -l 'app in (foo,bar)' --timeout=120s
           kubectl get pods -l 'app in (foo,bar)'
+
+      - name: Verify services
+        run: |
+          curl http://localhost
           curl -H "Host: foo.localhost" http://localhost
           curl -H "Host: bar.localhost" http://localhost
 
