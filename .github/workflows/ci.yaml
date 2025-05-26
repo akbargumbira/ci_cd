@@ -48,7 +48,14 @@ jobs:
 
       - name: Run Locust load test
         run: |
-          locust -f ./load_test/locustfile.py --headless -u 100 -r 10 --host http://localhost:8080 --run-time 1m
+          locust -f ./load_test/locustfile.py --headless -u 100 -r 10 --host http://localhost:8080 --run-time 30s --csv=locust_report
+          python summarize_locust.py
+
+      - name: Post summary as PR comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-file: locust_summary.md
 
 
 
