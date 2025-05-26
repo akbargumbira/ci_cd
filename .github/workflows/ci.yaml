@@ -36,9 +36,10 @@ jobs:
 
       - name: Port‑forward Traefik and verify services
         run: |
-          kubectl port-forward -n default svc/traefik 8080:80 && sleep 5
-          curl -H "Host: foo.localhost" http://localhost:8080
-          curl -H "Host: bar.localhost" http://localhost:8080
+          kubectl port-forward -n default svc/traefik 8080:80 &
+          sleep 5
+          curl -f -H "Host: foo.localhost" http://localhost:8080
+          curl -f -H "Host: bar.localhost" http://localhost:8080
 
 
 
