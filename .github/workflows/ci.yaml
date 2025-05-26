@@ -31,8 +31,9 @@ jobs:
 
       - name: Deploy services
         run: |
-          helm upgrade --install foo ./k8s/charts/echo-template -f ./k8s/deployment/foo/values.yaml
-          helm upgrade --install bar ./k8s/charts/echo-template -f ./k8s/deployment/bar/values.yaml
+          for app in foo bar; do
+            helm upgrade --install $app ./k8s/charts/echo-template -f ./k8s/deployment/$app/values.yaml
+          done
           kubectl wait --for=condition=ready pod -l 'app in (foo,bar)' --timeout=120s
           kubectl get pods -l 'app in (foo,bar)'
 
