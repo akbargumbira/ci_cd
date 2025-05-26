@@ -1,7 +1,7 @@
 from locust import HttpUser, task, between
 
 class FooBarUser(HttpUser):
-    wait_time = between(1, 2)
+    wait_time = between(0, 1)
 
     @task
     def foo(self):
