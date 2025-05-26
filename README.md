@@ -29,6 +29,7 @@ This proof-of-concept CI setup demonstrates core concepts effectively but falls 
       - Pod anti-affinity rules or topology spread constraints to tolerate node/zonal failures.
       - Resource requests/limits to support fair scheduling and autoscaling.
     - Improvement: Implement HPA, PodDisruptionBudgets, probes, and affinity policies for improved uptime and SLO compliance.
+    - On the cluster side, to have node autoscaler to scale up the node
 -  Lack of Observability Stack
    - While we can set up Prometheus setup local metric scraping, there is no persistent metric storage, which makes it hideous to deploy
    - No alerting rules.
@@ -38,7 +39,7 @@ This proof-of-concept CI setup demonstrates core concepts effectively but falls 
      - Deploy the full ELK / OTel stack 
      - Configure scraping of application and node metrics.
      - Add dashboards and Alertmanager configuration. Or SLOTH for more advanced alerting (e.g burn-rate alerting)
-     Integrate with external alerting systems (PagerDuty, Slack, Splunk, etc).
+     - Integrate with external alerting systems (PagerDuty, Slack, Splunk, etc).
      
 # Timeline
 - 26th May 13.20 - 14:56:
