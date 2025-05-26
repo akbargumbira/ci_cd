@@ -17,6 +17,21 @@ jobs:
           kubectl config current-context
           kubectl get nodes -o wide
 
+      - name: Install Traefik as Ingress Controller
+        run: |
+          helm repo add traefik https://traefik.github.io/charts
+          helm repo update
+          helm install traefik traefik/traefik \
+            --set ports.web.hostPort=80 \
+            --set ports.websecure.hostPort=443 \
+            --set service.type=NodePort
+          kubectl wait --namespace default \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/name=traefik \
+            --timeout=120s
+          kubectl get pods -l app.kubernetes.io/name=traefik
+        
+
       - name: Deploy services
         run: |
           helm upgrade --install foo ./k8s/charts/echo-template -f ./k8s/deployment/foo/values.yaml
