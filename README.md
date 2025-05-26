@@ -13,7 +13,7 @@ Github Action will do the following upon PR opening:
     - Run for 30s
     - Ramped up to 100 users
     - With rate of 10 RPS
-    - Each request will 
+    - Subsequent request will randomly wait from 0-1s after a sucessfull response
 - Post the load test result as a comment in the PR
 
 # Time
@@ -27,3 +27,5 @@ Github Action will do the following upon PR opening:
       - https://github.com/akbargumbira/ci_cd/pull/1 
       - https://github.com/akbargumbira/ci_cd/pull/2
 - 26th May 15:16 - 
+  - Add load test with locust
+  - Post load test result as Github comment
