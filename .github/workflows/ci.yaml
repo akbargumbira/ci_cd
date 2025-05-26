@@ -41,6 +41,16 @@ jobs:
           curl -f -H "Host: foo.localhost" http://localhost:8080
           curl -f -H "Host: bar.localhost" http://localhost:8080
 
+      - name: Install Locust
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install locust
+
+      - name: Run Locust load test
+        run: |
+          locust -f ./load_test/locustfile.py --headless -u 100 -r 10 --host http://localhost:8080 --run-time 1m
+
+
 
 
 
