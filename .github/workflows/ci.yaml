@@ -39,7 +39,7 @@ jobs:
 
       - name: Verify services
         run: |
-          curl http://localhost
+          curl http://127.0.0.1
           curl -H "Host: foo.localhost" http://localhost
           curl -H "Host: bar.localhost" http://localhost
 
