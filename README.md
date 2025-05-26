@@ -1,4 +1,11 @@
 # A simple CI/CD
+This repository serves an example on how to have a CI/CD to deploy your services to a k8s cluster.
+Github Action will do the following upon PR opening:
+- Set up KinD cluster
+- Set up Traefik for the ingress controller
+- Deploy two sample echo services (foo and bar)
+- Port-forward traefik to port 8080 and run load test using locust to foo and bar service
+- Post the load test result as a comment in the PR
 
 # Time
 - 26th May 13.20 - 14:56:

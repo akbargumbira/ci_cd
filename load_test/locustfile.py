@@ -5,8 +5,8 @@ class FooBarUser(HttpUser):
 
     @task
     def foo(self):
-        self.client.get("/", headers={"Host": "foo.localhost"})
+        self.client.get("/", headers={"Host": "foo.localhost"}, name="GET / (foo)")
 
     @task
     def bar(self):
-        self.client.get("/", headers={"Host": "bar.localhost"})
+        self.client.get("/", headers={"Host": "bar.localhost"}, name="GET / (bar)")
