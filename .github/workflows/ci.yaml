@@ -21,10 +21,7 @@ jobs:
         run: |
           helm repo add traefik https://traefik.github.io/charts && helm repo update
           kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.4/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-          helm install traefik traefik/traefik \
-            --set ports.web.hostPort=80 \
-            --set ports.websecure.hostPort=443 \
-            --set service.type=NodePort
+          helm install traefik traefik/traefik
           kubectl wait --for=condition=ready pod \
             --selector=app.kubernetes.io/name=traefik \
             --timeout=120s
@@ -37,11 +34,11 @@ jobs:
           kubectl wait --for=condition=ready pod -l 'app in (foo,bar)' --timeout=120s
           kubectl get pods -l 'app in (foo,bar)'
 
-      - name: Verify services
+      - name: Port‑forward Traefik and verify services
         run: |
-          curl http://127.0.0.1
-          curl -H "Host: foo.localhost" http://localhost
-          curl -H "Host: bar.localhost" http://localhost
+          kubectl port-forward -n traefik svc/traefik 8080:80 && sleep 5
+          curl -H "Host: foo.localhost" http://localhost:8080
+          curl -H "Host: bar.localhost" http://localhost:8080
 
 
 
