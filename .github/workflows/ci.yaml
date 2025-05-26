@@ -37,5 +37,9 @@ jobs:
           helm upgrade --install bar ./k8s/charts/echo-template -f ./k8s/deployment/bar/values.yaml
           kubectl wait --for=condition=ready pod -l 'app in (foo,bar)' --timeout=120s
           kubectl get pods -l 'app in (foo,bar)'
+          curl -H "Host: foo.localhost" http://localhost
+          curl -H "Host: bar.localhost" http://localhost
+
+
 
 
